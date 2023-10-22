@@ -1,6 +1,7 @@
-import type { Metadata } from 'next'
-import { Lexend } from 'next/font/google'
-import './globals.css'
+import { ReduxProvider } from '@/redux/provider';
+import type { Metadata } from 'next';
+import { Lexend } from 'next/font/google';
+import './globals.css';
 
 const lexend = Lexend({
   subsets: ['latin'],
@@ -20,7 +21,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${lexend.variable} font-poppins antialiased text-primary-dark bg-soft-gray`}>{children}</body>
+      <body className={`${lexend.variable} font-poppins antialiased text-primary-dark bg-soft-gray`}>
+        <ReduxProvider>
+          {children}
+        </ReduxProvider>
+      </body>
     </html>
   )
 }
