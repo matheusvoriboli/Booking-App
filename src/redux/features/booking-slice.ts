@@ -1,5 +1,6 @@
 import { BookingState } from "@/interfaces/BookingState";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import Swal from "sweetalert2";
 
 type InitialState = {
   value: BookingState[];
@@ -48,56 +49,100 @@ export const booking = createSlice({
       var incomingInitialDate = new Date(action.payload.initialDate);
       var incomingFinalDate = new Date(action.payload.finalDate);
       if (incomingInitialDate > incomingFinalDate) {
-        console.error("Initial Date cannot be bigger than the final date");
+        Swal.fire({
+          title: "Error!",
+          text: "Initial Date cannot be bigger than the final date",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       } else {
         if (state.value.length == 0) {
           state.value.push(action.payload);
+          Swal.fire({
+            title: 'Success!',
+            text: 'The booking was added',
+            icon: 'success',
+            showConfirmButton: false,
+            toast: true,
+            timer: 2500
+          })
         } else {
           if (
             !areDatesCollapsing(incomingInitialDate, incomingFinalDate, state)
           ) {
             state.value.push(action.payload);
+            Swal.fire({
+              title: "Success!",
+              text: "The booking was added",
+              icon: "success",
+              showConfirmButton: false,
+              toast: true,
+              timer: 2500
+            });
           } else {
-            console.error(
-              "You cannot book on this date. Check your bookings to find a better date"
-            );
+            Swal.fire({
+              title: "Error!",
+              text: "You cannot book cause some of the dates are overlapping.",
+              icon: "error",
+              confirmButtonText: "Ok",
+            });
           }
         }
       }
     },
     deleteBooking: (state, action: PayloadAction<number>) => {
       state.value = state.value.filter((obj) => obj.id !== action.payload);
+      Swal.fire({
+        title: "Success!",
+        text: "The booking was deleted",
+        icon: "success",
+        showConfirmButton: false,
+        toast: true,
+        timer: 2500
+      });
     },
     updateBooking: (state, action: PayloadAction<BookingState>) => {
       var incomingInitialDate = new Date(action.payload.initialDate);
       var incomingFinalDate = new Date(action.payload.finalDate);
       var incomingId = action.payload.id;
       if (incomingInitialDate > incomingFinalDate) {
-        console.error("Initial Date cannot be bigger than the final date");
+        Swal.fire({
+          title: "Error!",
+          text: "Initial Date cannot be bigger than the final date",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       } else {
-        if (state.value.length == 0) {
-          state.value.push(action.payload);
+        if (
+          !areDatesCollapsing(
+            incomingInitialDate,
+            incomingFinalDate,
+            state,
+            incomingId
+          )
+        ) {
+          state.value.forEach((obj) => {
+            if (obj.id === action.payload.id) {
+              obj.location = action.payload.location;
+              obj.initialDate = action.payload.initialDate;
+              obj.finalDate = action.payload.finalDate;
+            }
+            Swal.fire({
+               title: 'Success!',
+               text: 'The booking was updated',
+               icon: 'success',
+               showConfirmButton: false,
+               toast: true,
+               timer: 2500
+             })
+          });
         } else {
-          if (
-            !areDatesCollapsing(
-              incomingInitialDate,
-              incomingFinalDate,
-              state,
-              incomingId
-            )
-          ) {
-            state.value.forEach((obj) => {
-              if (obj.id === action.payload.id) {
-                obj.location = action.payload.location;
-                obj.initialDate = action.payload.initialDate;
-                obj.finalDate = action.payload.finalDate;
-              }
-            });
-          } else {
-            console.error(
-              "You cannot book on this date. Check your bookings to find a better date"
-            );
-          }
+          Swal.fire({
+            title: "Error!",
+            text: "You cannot book cause some of the dates are overlapping.",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
         }
       }
     },
