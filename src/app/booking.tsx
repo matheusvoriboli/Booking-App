@@ -84,7 +84,7 @@ export function Booking() {
       </div>
       <hr className="my-6" />
       <h1 className="text-2xl">Those are your bookings</h1>
-      <div className="flex flex-wrap gap-3 mt-4">
+      <div className="flex flex-wrap gap-3 mt-4 justify-around">
         {bookings?.map((booking, index: number) => (
           <BookingCard
             location={booking.location}
@@ -95,16 +95,6 @@ export function Booking() {
           />
         ))}
       </div>
-      {/* <div className="flex flex-wrap gap-3 mt-4">
-        {bookingsArray?.map((booking: BookingState, index: number) => (
-          <BookingCard
-            location={booking.location}
-            initialDate={booking.initialDate}
-            finalDate={booking.finalDate}
-            key={index}
-          />
-        ))}
-      </div> */}
     </div>
   );
 }
