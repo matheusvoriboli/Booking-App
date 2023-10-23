@@ -51,7 +51,7 @@ export const booking = createSlice({
       if (incomingInitialDate > incomingFinalDate) {
         Swal.fire({
           title: "Error!",
-          text: "Initial Date cannot be bigger than the final date",
+          text: "Initial date cannot be bigger than the final date.",
           icon: "error",
           confirmButtonText: "Ok",
         });
@@ -108,7 +108,7 @@ export const booking = createSlice({
       if (incomingInitialDate > incomingFinalDate) {
         Swal.fire({
           title: "Error!",
-          text: "Initial Date cannot be bigger than the final date",
+          text: "Initial date cannot be bigger than the final date.",
           icon: "error",
           confirmButtonText: "Ok",
         });
