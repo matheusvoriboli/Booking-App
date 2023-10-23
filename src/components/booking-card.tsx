@@ -21,7 +21,7 @@ export const BookingCard = ({
     <div className="bg-white w-[30%] min-w-[300px] rounded p-4 flex flex-col justify-between">
       <div>
         <div className="flex">
-          <h1><b>Location:</b> {location}</h1>
+          <h1 className="text-xl">{location}</h1>
         </div>
         <div className="flex">
           <h1><b>Start:</b> {initialDate}</h1>

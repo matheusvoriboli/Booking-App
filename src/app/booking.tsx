@@ -48,7 +48,7 @@ export function Booking() {
   return (
     <div className="p-4">
       <h1 className="font-semibold text-3xl">Create a new booking here</h1>
-      <div className="flex gap-4 mt-4">
+      <div className="flex flex-col md:flex-row gap-4 mt-4">
         <input
           type="text"
           className="p-3 rounded-md"
@@ -84,7 +84,7 @@ export function Booking() {
       </div>
       <hr className="my-6" />
       <h1 className="text-2xl">Those are your bookings</h1>
-      <div className="flex flex-wrap gap-3 mt-4 justify-around">
+      <div className="flex flex-wrap gap-3 mt-4">
         {bookings?.map((booking, index: number) => (
           <BookingCard
             location={booking.location}
